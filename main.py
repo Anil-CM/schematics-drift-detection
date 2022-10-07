@@ -9,7 +9,7 @@ import json
 import time
 
 def get_logger():
-    logging.basicConfig( encoding='utf-8', level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG)
     return logging.getLogger(__name__)
     
 def get_schematics_instance():
