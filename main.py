@@ -55,6 +55,7 @@ def main():
 
     logger = get_logger()
     workspace_id = os.environ.get('WORKSPACE_ID', None)
+    logger.info("workspace id : %s", workspace_id)
     if workspace_id == None:
         logger.error("workspace id is not provided to detect drift")
         return False
