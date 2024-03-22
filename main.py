@@ -106,11 +106,26 @@ def main():
         content = response.content
 
     # 5. Run task - 3: Analyse logs
+    data_to_send = {}
     if content is not None:
         if "configuration drift identfied" in str(content):
+            data_to_send["text"] = "workspace_id: %s\n configuration_drift: found\n activity_id: %s\n".format(workspace_id, activityid)
+            # data_to_send["workspace_id"] = workspace_id
+            # data_to_send["configuration_drift"] = True
+            # data_to_send["activity_id"] = activityid
+            #data_to_send["logs"] = str(content)
             logger.info("drift detected")
 
-    # 6. Run task - 4: Send notification
+            # 6. Run task - 4: Send notification
+            webhook_url = os.environ.get('WEBHOOK_URL', None)
+            if webhook_url != None:
+                requests.post(url=webhook_url, data=data_to_send, headers={'Content-type': 'application/json'})
+        else:
+            logger.info("No configuration drift detected")
+
+
+    
+
 
 if __name__ == "__main__":
     main()
